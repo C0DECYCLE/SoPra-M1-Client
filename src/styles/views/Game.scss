@@ -1,21 +1,15 @@
 @import "../theme";
 
-/* The '&' is a shorthand for the containing element,
-  so for example a '&.user-list' inside .game will compile to
-  .game.user-list
-
-  for more information visit https://sass-lang.com/guide
- */
-
 .game {
   &.container {
+    margin-top: 2em;
     background: $background;
     padding: 1.5em;
     border-radius: $borderRadius;
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: $dropShadow;
+    //box-shadow: $dropShadow;
   }
   &.user-list {
     list-style: none;
@@ -27,7 +21,8 @@
     align-items: center;
     justify-content: center;
   }
-  & p,h2 {
+  & p,
+  h2 {
     margin: 0.5em 0;
   }
 }
@@ -40,15 +35,12 @@
     border-radius: $borderRadius;
     display: flex;
     align-items: center;
-    background: lighten($background, 5);
-  }
-  &.name {
-    font-weight: 300;
-    margin-left: 5px;
+    background: $accentDark;
+    color: $textColor;
   }
   &.username {
-    font-weight: 500;
-    color: $accent;
+    font-weight: 300;
+    margin-left: 5px;
   }
   &.id {
     margin-left: auto;

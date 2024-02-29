@@ -1,0 +1,47 @@
+@import "../theme";
+
+.logregform {
+  &.field {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  &.input {
+    height: 35px;
+    padding-left: 15px;
+    margin-left: -4px;
+    border: none;
+    border-radius: 0.75em;
+    margin-bottom: 20px;
+    background: $accentDark;
+    color: $textColor;
+  }
+  &.label {
+    color: $textColor;
+    margin-bottom: 10px;
+    font-weight: 300;
+  }
+  &.togglePassword {
+    /* Add if not using autoprefixer */
+    -webkit-appearance: none;
+    /* Remove most all native input styles */
+    appearance: none;
+    /* For iOS < 15 */
+    background-color: var(--form-background);
+    /* Not removed via appearance */
+    margin: 0;
+
+    position: absolute;
+    top: 38.5px;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background-color: $textColor;
+    clip-path: url(#eyeStrikeSvg);
+  }
+  &.togglePassword:checked {
+    clip-path: url(#eyeSvg);
+  }
+}

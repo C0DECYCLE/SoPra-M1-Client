@@ -3,11 +3,19 @@
 .header {
   &.container {
     @include center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: $textColor;
+    text-align: center;
   }
 
   &.title {
     font-weight: bold;
-    color: $background;
-    text-align: center;
+    margin-bottom: 0em;
+  }
+
+  &.subtitle {
+    margin-top: 0em;
   }
 }

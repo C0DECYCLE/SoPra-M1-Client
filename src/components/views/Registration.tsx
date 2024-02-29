@@ -3,21 +3,20 @@ import { api, handleError } from "helpers/api";
 import User from "models/User";
 import { useNavigate } from "react-router-dom";
 import { Button } from "components/ui/Button";
-import "styles/views/Login.scss";
+import "styles/views/Registration.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import FormField from "components/ui/LogRegForm";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
-const Login = () => {
+const Registration = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState<string>(null);
   const [password, setPassword] = useState<string>(null);
 
-  const doLogin = async () => {
+  const doRegistration = async () => {
     try {
       const requestBody = JSON.stringify({ username, password });
-      const response = await api.post("/user", requestBody);
+      const response = await api.post("/users", requestBody);
 
       const user = new User(response.data);
       localStorage.setItem("token", user.token);
@@ -25,7 +24,7 @@ const Login = () => {
       navigate("/game");
     } catch (e) {
       const data = e.response.data;
-      if (data.status === 406) {
+      if (data.status === 409) {
         toast.error(data.message);
       } else {
         toast.error(
@@ -35,15 +34,15 @@ const Login = () => {
     }
   };
 
-  const goRegistration = () => {
-    navigate("/registration");
+  const doCancel = () => {
+    navigate("/login");
   };
 
   return (
     <BaseContainer>
-      <div className="login container">
-        <div className="login form">
-          <div className="login fields">
+      <div className="registration container">
+        <div className="registration form">
+          <div className="registration fields">
             <FormField
               label="Username"
               value={username}
@@ -52,23 +51,21 @@ const Login = () => {
             <FormField
               label="Password"
               value={password}
-              onChange={(n: string) => setPassword(n)}
-              isPassword={true}
+              onChange={(n) => setPassword(n)}
             />
-            <div className="login button-container">
-              <Button
-                disabled={!username || !password}
-                width="100%"
-                onClick={() => doLogin()}
-              >
-                Login
-              </Button>
-            </div>
           </div>
-          <label className="logregform label">No account?</label>
-          <div className="login button-container">
-            <Button width="100%" onClick={() => goRegistration()}>
+          <div className="registration button-container">
+            <Button
+              disabled={!username || !password}
+              width="100%"
+              onClick={() => doRegistration()}
+            >
               Registrate
+            </Button>
+          </div>
+          <div className="registration button-container">
+            <Button width="100%" onClick={() => doCancel()}>
+              Cancel
             </Button>
           </div>
         </div>
@@ -77,4 +74,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Registration;
