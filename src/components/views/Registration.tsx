@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import { api, handleError } from "helpers/api";
-import User from "models/User";
 import { useNavigate } from "react-router-dom";
 import { Button } from "components/ui/Button";
 import "styles/views/Registration.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import FormField from "components/ui/LogRegForm";
-import { toast } from "react-toastify";
+import UserManager from "managers/UserManager";
 
 const Registration = () => {
   const navigate = useNavigate();
@@ -14,23 +12,9 @@ const Registration = () => {
   const [password, setPassword] = useState<string>(null);
 
   const doRegistration = async () => {
-    try {
-      const requestBody = JSON.stringify({ username, password });
-      const response = await api.post("/users", requestBody);
-
-      const user = new User(response.data);
-      localStorage.setItem("token", user.token);
-
+    const successful = await UserManager.registrate({ username, password });
+    if (successful) {
       navigate("/game");
-    } catch (e) {
-      const data = e.response.data;
-      if (data.status === 409) {
-        toast.error(data.message);
-      } else {
-        toast.error(
-          `Something went wrong during the login: \n${handleError(e)}`
-        );
-      }
     }
   };
 
@@ -47,11 +31,13 @@ const Registration = () => {
               label="Username"
               value={username}
               onChange={(un: string) => setUsername(un)}
+              isPassword={false}
             />
             <FormField
               label="Password"
               value={password}
               onChange={(n) => setPassword(n)}
+              isPassword={true}
             />
           </div>
           <div className="registration button-container">

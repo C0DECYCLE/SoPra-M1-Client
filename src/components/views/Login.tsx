@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import { api, handleError } from "helpers/api";
-import User from "models/User";
 import { useNavigate } from "react-router-dom";
 import { Button } from "components/ui/Button";
 import "styles/views/Login.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import FormField from "components/ui/LogRegForm";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import UserManager from "managers/UserManager";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -15,23 +13,9 @@ const Login = () => {
   const [password, setPassword] = useState<string>(null);
 
   const doLogin = async () => {
-    try {
-      const requestBody = JSON.stringify({ username, password });
-      const response = await api.post("/user", requestBody);
-
-      const user = new User(response.data);
-      localStorage.setItem("token", user.token);
-
+    const successful = await UserManager.login({ username, password });
+    if (successful) {
       navigate("/game");
-    } catch (e) {
-      const data = e.response.data;
-      if (data.status === 406) {
-        toast.error(data.message);
-      } else {
-        toast.error(
-          `Something went wrong during the login: \n${handleError(e)}`
-        );
-      }
     }
   };
 
@@ -48,6 +32,7 @@ const Login = () => {
               label="Username"
               value={username}
               onChange={(un: string) => setUsername(un)}
+              isPassword={false}
             />
             <FormField
               label="Password"

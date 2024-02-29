@@ -21,7 +21,7 @@ const FormField = (props) => {
       {passwordToggle}
       <input
         className="logregform input"
-        placeholder="enter here.."
+        placeholder=""
         value={props.value}
         onChange={(e) => props.onChange(e.target.value)}
         type={props.isPassword ? (showPassword ? "text" : "password") : "text"}

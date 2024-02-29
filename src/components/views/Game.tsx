@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { api, handleError } from "helpers/api";
 import { Spinner } from "components/ui/Spinner";
 import { Button } from "components/ui/Button";
 import { useNavigate } from "react-router-dom";
@@ -7,13 +6,16 @@ import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/Game.scss";
 import { User } from "models/User";
-import { toast } from "react-toastify";
+import UserManager from "managers/UserManager";
 
 const Player = ({ user }: { user: User }) => {
+  const dynColor = user.status === "ONLINE" ? "green" : "red";
   return (
     <div className="player container">
       <div className="player username">{user.username}</div>
-      <div className="player id">id: {user.id}</div>
+      <div className="player status" style={{ color: dynColor }}>
+        {user.status}
+      </div>
     </div>
   );
 };
@@ -27,33 +29,17 @@ const Game = () => {
   const [users, setUsers] = useState<User[]>(null);
 
   const logout = (): void => {
-    localStorage.removeItem("token");
+    UserManager.logout();
     navigate("/login");
   };
 
   useEffect(() => {
     async function fetchData() {
-      try {
-        const response = await api.get("/users");
-
-        //console.log(response);
-        //await new Promise((resolve) => setTimeout(resolve, 1000));
-
-        setUsers(response.data);
-      } catch (error) {
-        console.error(
-          `Something went wrong while fetching the users: \n${handleError(
-            error
-          )}`
-        );
-        console.error("Details:", error);
-
-        toast.error(
-          "Something went wrong while fetching the users! See the console for details."
-        );
+      const users = await UserManager.fetchUsers();
+      if (users) {
+        setUsers(users);
       }
     }
-
     fetchData();
   }, []);
 
@@ -78,7 +64,7 @@ const Game = () => {
 
   return (
     <BaseContainer className="game container">
-      <p className="game paragraph">Get all users from secure endpoint:</p>
+      <p className="game paragraph">Registered users</p>
       {content}
     </BaseContainer>
   );
