@@ -77,10 +77,11 @@ class UserManagerSingleton {
       this.#internalLogin(new User(response.data));
       return true;
     } catch (e) {
-      log(e);
       const failure = e.response.data;
+      const backupMsg =
+        "The username provided already exists. Please choose another one.";
       if (failure.status === HttpStatusCode.Conflict) {
-        toast.error(failure.message);
+        toast.error(failure.message || backupMsg);
       } else {
         genericError("Something went wrong during the login", e);
       }
@@ -111,10 +112,11 @@ class UserManagerSingleton {
       this.#internalLogin(new User(response.data));
       return true;
     } catch (e) {
-      log(e);
       const failure = e.response.data;
+      const backupMsg =
+        "Username and/or password is not correct. Please try again.";
       if (failure.status === HttpStatusCode.Conflict) {
-        toast.error(failure.message);
+        toast.error(failure.message || backupMsg);
       } else {
         genericError("Something went wrong during the login", e);
       }
