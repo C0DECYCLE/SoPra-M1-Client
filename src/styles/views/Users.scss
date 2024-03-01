@@ -27,7 +27,7 @@
   }
 }
 
-.player {
+.user {
   &.container {
     margin: 0.5em 0;
     width: 20em;
@@ -47,5 +47,11 @@
     margin-right: 10px;
     font-family: $fontMono;
     font-weight: 300;
+  }
+  &.status.on {
+    color: $greenColor;
+  }
+  &.status.off {
+    color: $redColor;
   }
 }

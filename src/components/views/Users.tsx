@@ -8,19 +8,17 @@ import "styles/views/Users.scss";
 import { User } from "models/User";
 import UserManager from "managers/UserManager";
 
-const Player = ({ user }: { user: User }) => {
-  const dynColor = user.status === "ONLINE" ? "green" : "red";
+const UserElement = ({ user }: { user: User }) => {
+  const mode = user.status === "ONLINE" ? "on" : "off";
   return (
-    <div className="player container">
-      <div className="player username">{user.username}</div>
-      <div className="player status" style={{ color: dynColor }}>
-        {user.status}
-      </div>
+    <div className="user container">
+      <div className="user username">{user.username}</div>
+      <div className={`user status ${mode}`}>{user.status}</div>
     </div>
   );
 };
 
-Player.propTypes = {
+UserElement.propTypes = {
   user: PropTypes.object,
 };
 
@@ -51,7 +49,7 @@ const Users = () => {
         <ul className="users user-list">
           {users.map((user: User) => (
             <li key={user.id}>
-              <Player user={user} />
+              <UserElement user={user} />
             </li>
           ))}
         </ul>
