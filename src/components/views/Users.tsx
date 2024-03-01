@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Spinner } from "components/ui/Spinner";
 import { Button } from "components/ui/Button";
 import { useNavigate } from "react-router-dom";
@@ -9,12 +9,16 @@ import { User } from "models/User";
 import UserManager from "managers/UserManager";
 
 const UserElement = ({ user }: { user: User }) => {
+  const navigate = useNavigate();
   const mode = user.status === "ONLINE" ? "on" : "off";
+  const goProfile = () => {
+    navigate(`/users/profile/${user.id}`);
+  };
   return (
-    <div className="user container">
+    <button className="user container" onClick={() => goProfile()}>
       <div className="user username">{user.username}</div>
       <div className={`user status ${mode}`}>{user.status}</div>
-    </div>
+    </button>
   );
 };
 
@@ -23,23 +27,15 @@ UserElement.propTypes = {
 };
 
 const Users = () => {
-  const navigate = useNavigate();
   const [users, setUsers] = useState<User[]>(null);
+  const navigate = useNavigate();
 
   const logout = (): void => {
     UserManager.logout();
     navigate("/login");
   };
 
-  useEffect(() => {
-    async function fetchData() {
-      const users = await UserManager.fetchUsers();
-      if (users) {
-        setUsers(users);
-      }
-    }
-    fetchData();
-  }, []);
+  UserManager.onListChange.once(() => setUsers(UserManager.list));
 
   let content = <Spinner />;
 
@@ -47,24 +43,33 @@ const Users = () => {
     content = (
       <div className="users">
         <ul className="users user-list">
-          {users.map((user: User) => (
-            <li key={user.id}>
-              <UserElement user={user} />
-            </li>
-          ))}
+          {users.map((user: User) =>
+            user.id !== UserManager.me.id ? (
+              <li key={user.id}>
+                <UserElement user={user} />
+              </li>
+            ) : undefined
+          )}
         </ul>
-        <Button width="100%" onClick={() => logout()}>
-          Logout
-        </Button>
       </div>
     );
   }
 
   return (
-    <BaseContainer className="users container">
-      <p className="users paragraph">Registered users</p>
-      {content}
-    </BaseContainer>
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <BaseContainer className="users container">
+        <h3>{`Welcome ${UserManager.me.username}`}</h3>
+        <Button width="100%" onClick={() => {}}>
+          Edit
+        </Button>
+        <div className="users buttonspacing"></div>
+        <Button width="100%" onClick={() => logout()}>
+          Logout
+        </Button>
+        <p className="users paragraph">Other users:</p>
+        {content}
+      </BaseContainer>
+    </div>
   );
 };
 

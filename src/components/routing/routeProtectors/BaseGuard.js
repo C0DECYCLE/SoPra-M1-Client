@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Navigate, Outlet } from "react-router-dom";
-import PropTypes from "prop-types";
 import UserManager from "managers/UserManager";
 import { Spinner } from "components/ui/Spinner";
 

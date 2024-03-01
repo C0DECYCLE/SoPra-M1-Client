@@ -7,13 +7,14 @@ import Login from "../../views/Login";
 import { RegistrationGuard } from "../routeProtectors/RegistrationGuard";
 import Registration from "../../views/Registration";
 
+import Users from "../../views/Users";
+import UserProfile from "../../views/UserProfile";
+
 const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/users/*" element={<UsersGuard />}>
-          <Route path="/users/*" element={<UsersRouter base="/users" />} />
-        </Route>
+        <Route path="/" element={<Navigate to="/login" replace />} />
 
         <Route path="/login" element={<LoginGuard />}>
           <Route path="/login" element={<Login />} />
@@ -23,13 +24,13 @@ const AppRouter = () => {
           <Route path="/registration" element={<Registration />} />
         </Route>
 
-        <Route path="/" element={<Navigate to="/users" replace />} />
+        <Route path="/users" element={<UsersGuard />}>
+          <Route path="" element={<Users />} />
+          <Route path="profile/*" element={<UserProfile />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
 };
 
-/*
- * Don't forget to export your component!
- */
 export default AppRouter;

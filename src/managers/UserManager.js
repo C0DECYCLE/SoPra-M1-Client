@@ -1,4 +1,5 @@
-import { assert } from "helpers/assert";
+import { assert } from "helpers/utils";
+import EventEmitter from "helpers/EventEmitter";
 import { log, warn } from "helpers/logger";
 import User from "models/User";
 import { HttpStatusCode } from "axios";
@@ -7,12 +8,50 @@ import { toast } from "react-toastify";
 import { genericError } from "../helpers/api";
 
 class UserManagerSingleton {
+  static ListenRateSeconds = 2;
+
   get isLoggedIn() {
     return this.me !== null;
   }
 
   constructor() {
     this.me = null;
+    this.list = [];
+    this.onListChange = new EventEmitter();
+    this.#listen();
+  }
+
+  #listen() {
+    setInterval(
+      async () => await this.#updateList(),
+      UserManagerSingleton.ListenRateSeconds * 1000
+    );
+  }
+
+  async #updateList() {
+    if (!this.isLoggedIn) {
+      return;
+    }
+    this.list = await this.fetchUsers();
+    this.onListChange.emit();
+  }
+
+  hasId(id) {
+    for (const user of this.list) {
+      if (user.id === id) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  getById(id) {
+    for (const user of this.list) {
+      if (user.id === id) {
+        return user;
+      }
+    }
+    return null;
   }
 
   async fetchUsers() {
@@ -21,7 +60,7 @@ class UserManagerSingleton {
     try {
       const response = await api.get("/users");
       const users = response.data;
-      log(users);
+      //log(users);
       return users;
     } catch (e) {
       genericError("Something went wrong while fetching the users", e);

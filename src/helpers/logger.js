@@ -1,3 +1,8 @@
+/**
+ * Copyright (C) - All Rights Reserved
+ * Written by Noah Mattia Bussinger, May 2021
+ */
+
 export function log(...data) {
   return logger("log", ...data);
 }

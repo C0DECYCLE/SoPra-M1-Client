@@ -1,0 +1,64 @@
+@import "../theme";
+
+.userprofile {
+  &.container {
+    margin-top: 2em;
+    min-height: 300px;
+    /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
+    @include center;
+    flex-direction: column;
+  }
+  &.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 60%;
+    max-width: 30em;
+    //height: 21em;
+    font-size: 16px;
+    font-weight: 300;
+    padding-left: 37px;
+    padding-right: 37px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 0.75em;
+    background-color: $background;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    //box-shadow: $dropShadow;
+  }
+  & h3 {
+    text-align: center;
+  }
+
+  &.leftright {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 2em;
+  }
+  &.left {
+    width: 50%;
+    margin-left: 1em;
+    display: flex;
+    flex-direction: column;
+  }
+  &.right {
+    width: 50%;
+    margin-left: 1em;
+    display: flex;
+    flex-direction: column;
+  }
+  & label {
+    margin-bottom: 0.5em;
+  }
+  &.on {
+    color: $greenColor;
+  }
+  &.off {
+    color: $redColor;
+  }
+  &.button-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1em;
+  }
+}
