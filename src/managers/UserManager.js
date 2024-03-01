@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { genericError } from "../helpers/api";
 
 class UserManagerSingleton {
-  static ListenRateSeconds = 2;
+  static RateSeconds = 2;
 
   get isLoggedIn() {
     return this.me !== null;
@@ -18,14 +18,14 @@ class UserManagerSingleton {
     this.me = null;
     this.list = [];
     this.onListChange = new EventEmitter();
-    this.#listen();
+    this.#schedule();
   }
 
-  #listen() {
-    setInterval(
-      async () => await this.#updateList(),
-      UserManagerSingleton.ListenRateSeconds * 1000
-    );
+  #schedule() {
+    setInterval(async () => {
+      await this.#updateList();
+      //send status ping
+    }, UserManagerSingleton.RateSeconds * 1000);
   }
 
   async #updateList() {
@@ -77,6 +77,7 @@ class UserManagerSingleton {
       this.#internalLogin(new User(response.data));
       return true;
     } catch (e) {
+      log(e);
       const failure = e.response.data;
       if (failure.status === HttpStatusCode.Conflict) {
         toast.error(failure.message);
@@ -110,6 +111,7 @@ class UserManagerSingleton {
       this.#internalLogin(new User(response.data));
       return true;
     } catch (e) {
+      log(e);
       const failure = e.response.data;
       if (failure.status === HttpStatusCode.Conflict) {
         toast.error(failure.message);
