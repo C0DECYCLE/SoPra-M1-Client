@@ -3,9 +3,9 @@ import { Navigate, Outlet } from "react-router-dom";
 import PropTypes from "prop-types";
 import { BaseGuard } from "./BaseGuard";
 
-export const GameGuard = () =>
+export const UsersGuard = () =>
   BaseGuard(<Outlet />, <Navigate to="/login" replace />);
 
-GameGuard.propTypes = {
+UsersGuard.propTypes = {
   children: PropTypes.node,
 };

@@ -14,7 +14,7 @@ const Registration = () => {
   const doRegistration = async () => {
     const successful = await UserManager.registrate({ username, password });
     if (successful) {
-      navigate("/game");
+      navigate("/users");
     }
   };
 

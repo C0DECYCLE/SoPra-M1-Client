@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { BaseGuard } from "./BaseGuard";
 
 export const LoginGuard = () =>
-  BaseGuard(<Navigate to="/game" replace />, <Outlet />);
+  BaseGuard(<Navigate to="/users" replace />, <Outlet />);
 
 LoginGuard.propTypes = {
   children: PropTypes.node,

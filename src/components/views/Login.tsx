@@ -15,7 +15,7 @@ const Login = () => {
   const doLogin = async () => {
     const successful = await UserManager.login({ username, password });
     if (successful) {
-      navigate("/game");
+      navigate("/users");
     }
   };
 

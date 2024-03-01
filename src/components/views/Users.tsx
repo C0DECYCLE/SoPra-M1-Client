@@ -4,7 +4,7 @@ import { Button } from "components/ui/Button";
 import { useNavigate } from "react-router-dom";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
-import "styles/views/Game.scss";
+import "styles/views/Users.scss";
 import { User } from "models/User";
 import UserManager from "managers/UserManager";
 
@@ -24,7 +24,7 @@ Player.propTypes = {
   user: PropTypes.object,
 };
 
-const Game = () => {
+const Users = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState<User[]>(null);
 
@@ -47,8 +47,8 @@ const Game = () => {
 
   if (users) {
     content = (
-      <div className="game">
-        <ul className="game user-list">
+      <div className="users">
+        <ul className="users user-list">
           {users.map((user: User) => (
             <li key={user.id}>
               <Player user={user} />
@@ -63,11 +63,11 @@ const Game = () => {
   }
 
   return (
-    <BaseContainer className="game container">
-      <p className="game paragraph">Registered users</p>
+    <BaseContainer className="users container">
+      <p className="users paragraph">Registered users</p>
       {content}
     </BaseContainer>
   );
 };
 
-export default Game;
+export default Users;
