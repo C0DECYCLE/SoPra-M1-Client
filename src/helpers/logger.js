@@ -6,7 +6,7 @@ export function warn(...data) {
   return logger("warn", ...data);
 }
 
-const logger_maximum = 256;
+const logger_maximum = 512;
 let logger_count = 0;
 
 function logger(type, ...data) {

@@ -1,9 +1,10 @@
 import { assert } from "helpers/assert";
-import { log } from "helpers/logger";
+import { log, warn } from "helpers/logger";
 import User from "models/User";
 import { HttpStatusCode } from "axios";
 import { api, handleError } from "helpers/api";
 import { toast } from "react-toastify";
+import { genericError } from "../helpers/api";
 
 class UserManagerSingleton {
   get isLoggedIn() {
@@ -16,20 +17,14 @@ class UserManagerSingleton {
 
   async fetchUsers() {
     assert(this.isLoggedIn);
-    log("try fetch users");
+    //log("try fetch users");
     try {
       const response = await api.get("/users");
       const users = response.data;
-      console.log(users);
+      log(users);
       return users;
-    } catch (error) {
-      console.error(
-        `Something went wrong while fetching the users: \n${handleError(error)}`
-      );
-      console.error("Details:", error);
-      toast.error(
-        "Something went wrong while fetching the users! See the console for details."
-      );
+    } catch (e) {
+      genericError("Something went wrong while fetching the users", e);
     }
     return false;
   }
@@ -47,9 +42,7 @@ class UserManagerSingleton {
       if (failure.status === HttpStatusCode.Conflict) {
         toast.error(failure.message);
       } else {
-        toast.error(
-          `Something went wrong during the login: \n${handleError(e)}`
-        );
+        genericError("Something went wrong during the login", e);
       }
     }
     return false;
@@ -82,9 +75,7 @@ class UserManagerSingleton {
       if (failure.status === HttpStatusCode.Conflict) {
         toast.error(failure.message);
       } else {
-        toast.error(
-          `Something went wrong during the login: \n${handleError(e)}`
-        );
+        genericError("Something went wrong during the login", e);
       }
     }
     return false;
@@ -99,11 +90,9 @@ class UserManagerSingleton {
       this.#internalLogin(new User(response.data));
       return true;
     } catch (e) {
-      console.log(e);
       const failure = e.response.data;
-
       if (failure.status === HttpStatusCode.Conflict) {
-        this.logout();
+        this.logout(true);
       }
     }
     return false;
@@ -115,8 +104,8 @@ class UserManagerSingleton {
     //log("login", this.me);
   }
 
-  logout() {
-    if (!this.isLoggedIn) {
+  logout(force) {
+    if (!force && !this.isLoggedIn) {
       return;
     }
     this.me = null;

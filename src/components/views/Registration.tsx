@@ -8,8 +8,8 @@ import UserManager from "managers/UserManager";
 
 const Registration = () => {
   const navigate = useNavigate();
-  const [username, setUsername] = useState<string>(null);
-  const [password, setPassword] = useState<string>(null);
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   const doRegistration = async () => {
     const successful = await UserManager.registrate({ username, password });
