@@ -14,19 +14,19 @@ const UserProfile = () => {
   const [user, setUser] = useState<User>(null);
   const id = parseInt(location.pathname.split("/").at(-1));
 
-  const doCancel = () => {
+  const goBack = () => {
     navigate("/users");
   };
 
   useEffect(() => {
     if (isNaN(id)) {
-      doCancel();
+      goBack();
     }
   }, []);
 
   UserManager.onListChange.once(() => {
     if (!UserManager.hasId(id)) {
-      doCancel();
+      goBack();
     }
     setUser(UserManager.getById(id));
   });
@@ -55,8 +55,8 @@ const UserProfile = () => {
           </div>
         </div>
         <div className="userprofile button-container">
-          <Button width="100%" onClick={() => doCancel()}>
-            Cancel
+          <Button width="100%" onClick={() => goBack()}>
+            Back
           </Button>
         </div>
       </div>
