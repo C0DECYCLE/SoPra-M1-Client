@@ -24,7 +24,7 @@ class UserManagerSingleton {
   #schedule() {
     setInterval(async () => {
       await this.#updateList();
-      //send status ping
+      this.#sendStatusPing();
     }, UserManagerSingleton.RateSeconds * 1000);
   }
 
@@ -34,6 +34,15 @@ class UserManagerSingleton {
     }
     this.list = await this.fetchUsers();
     this.onListChange.emit();
+  }
+
+  #sendStatusPing() {
+    if (!this.isLoggedIn) {
+      return;
+    }
+    assert(this.me && this.me.token);
+    const body = JSON.stringify({ token: this.me.token });
+    api.post("/userStatusPing", body);
   }
 
   hasId(id) {

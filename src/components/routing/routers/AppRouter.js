@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { UsersGuard } from "../routeProtectors/UsersGuard";
-import UsersRouter from "./UsersRouter";
 import { LoginGuard } from "../routeProtectors/LoginGuard";
 import Login from "../../views/Login";
 import { RegistrationGuard } from "../routeProtectors/RegistrationGuard";

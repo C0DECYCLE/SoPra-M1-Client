@@ -44,7 +44,7 @@ const Users = () => {
       <div className="users">
         <ul className="users user-list">
           {users.map((user: User) =>
-            user.id !== UserManager.me.id ? (
+            user.id !== UserManager.me?.id ? (
               <li key={user.id}>
                 <UserElement user={user} />
               </li>
@@ -58,7 +58,7 @@ const Users = () => {
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <BaseContainer className="users container">
-        <h3>{`Welcome ${UserManager.me.username}`}</h3>
+        <h3>{`Welcome ${UserManager.me?.username}`}</h3>
         <Button width="100%" onClick={() => {}}>
           Edit
         </Button>
