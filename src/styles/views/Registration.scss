@@ -8,6 +8,10 @@
     @include center;
     flex-direction: column;
   }
+  & h2 {
+    text-align: center;
+    margin-top: 1em;
+  }
   &.fields {
     margin-bottom: 1em;
   }
@@ -17,15 +21,14 @@
     justify-content: center;
     width: 60%;
     max-width: 30em;
-    height: 21em;
+    padding-bottom: 1em;
     font-size: 16px;
     font-weight: 300;
     padding-left: 37px;
     padding-right: 37px;
-    border-radius: 0.75em;
+    border-radius: $borderRadius;
     background-color: $background;
     transition: opacity 0.5s ease, transform 0.5s ease;
-    //box-shadow: $dropShadow;
   }
   &.button-container {
     display: flex;

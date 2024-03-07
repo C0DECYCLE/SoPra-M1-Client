@@ -1,6 +1,6 @@
 @import "../theme";
 
-.userprofile {
+.useredit {
   &.container {
     margin-top: 2em;
     min-height: 300px;
@@ -23,11 +23,6 @@
     border-radius: $borderRadius;
     background-color: $background;
     transition: opacity 0.5s ease, transform 0.5s ease;
-  }
-  & h2 {
-    margin-top: 0.5em;
-    margin-bottom: 1em;
-    text-align: center;
   }
   &.leftright {
     display: flex;
@@ -61,5 +56,42 @@
     display: flex;
     justify-content: center;
     margin-bottom: 1em;
+  }
+  &.namefield {
+    margin-top: 0.5em;
+    margin-bottom: 2em;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  &.name {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 40%;
+    height: 35px;
+    border: none;
+    border-radius: $borderRadius;
+    background: $accentDark;
+    color: $textColor;
+  }
+  &.date {
+    margin-left: -10px;
+    padding-left: 10px;
+    width: 115px;
+    height: 35px;
+    border: none;
+    border-radius: $borderRadius;
+    background: $accentDark;
+    color: $textColor;
+    font-size: 16px;
+    font-weight: 300;
+  }
+  &.picker {
+    border: none;
+    font-size: 16px;
+    font-family: $fontMono;
+    font-weight: 300;
   }
 }

@@ -1,6 +1,8 @@
 import axios from "axios";
 import { getDomain } from "./getDomain";
 import { toast } from "react-toastify";
+import "styles/index.scss";
+import "react-toastify/dist/ReactToastify.css";
 import { log, warn } from "helpers/logger";
 
 export const api = axios.create({

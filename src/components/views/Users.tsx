@@ -30,12 +30,16 @@ const Users = () => {
   const [users, setUsers] = useState<User[]>(null);
   const navigate = useNavigate();
 
-  const logout = (): void => {
+  const goEdit = () => {
+    navigate("/users/edit");
+  };
+
+  const logout = () => {
     UserManager.logout();
     navigate("/login");
   };
 
-  UserManager.onListChange.once(() => setUsers(UserManager.list));
+  UserManager.onTick.once(() => setUsers(UserManager.list));
 
   let content = <Spinner />;
 
@@ -59,7 +63,7 @@ const Users = () => {
     <div style={{ display: "flex", flexDirection: "column" }}>
       <BaseContainer className="users container">
         <h3>{`Welcome ${UserManager.me?.username}`}</h3>
-        <Button width="100%" onClick={() => {}}>
+        <Button width="100%" onClick={() => goEdit()}>
           Edit
         </Button>
         <div className="users buttonspacing"></div>

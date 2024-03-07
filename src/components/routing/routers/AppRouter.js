@@ -5,9 +5,9 @@ import { LoginGuard } from "../routeProtectors/LoginGuard";
 import Login from "../../views/Login";
 import { RegistrationGuard } from "../routeProtectors/RegistrationGuard";
 import Registration from "../../views/Registration";
-
 import Users from "../../views/Users";
 import UserProfile from "../../views/UserProfile";
+import UserEdit from "../../views/UserEdit";
 
 const AppRouter = () => {
   return (
@@ -16,16 +16,17 @@ const AppRouter = () => {
         <Route path="/" element={<Navigate to="/login" replace />} />
 
         <Route path="/login" element={<LoginGuard />}>
-          <Route path="/login" element={<Login />} />
+          <Route path="" element={<Login />} />
         </Route>
 
         <Route path="/registration" element={<RegistrationGuard />}>
-          <Route path="/registration" element={<Registration />} />
+          <Route path="" element={<Registration />} />
         </Route>
 
         <Route path="/users" element={<UsersGuard />}>
           <Route path="" element={<Users />} />
           <Route path="profile/*" element={<UserProfile />} />
+          <Route path="edit" element={<UserEdit />} />
         </Route>
       </Routes>
     </BrowserRouter>

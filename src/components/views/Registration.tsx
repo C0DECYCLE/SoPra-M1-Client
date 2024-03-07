@@ -26,6 +26,7 @@ const Registration = () => {
     <BaseContainer>
       <div className="registration container">
         <div className="registration form">
+          <h2>Registration</h2>
           <div className="registration fields">
             <FormField
               label="Username"

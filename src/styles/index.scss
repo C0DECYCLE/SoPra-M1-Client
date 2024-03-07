@@ -8,7 +8,19 @@ body {
   min-height: 100vh;
   font-family: $fontDefault;
   background-color: $accentDark;
-  //background-image: linear-gradient(135deg, $accent 10%, $accentDark 100%);
+  .Toastify__toast-container {
+    .Toastify__toast--success {
+      background: $greenColor;
+    }
+
+    .Toastify__toast--warning {
+      background: $yellowColor;
+    }
+
+    .Toastify__toast--error {
+      background: $redColor;
+    }
+  }
 }
 
 input,

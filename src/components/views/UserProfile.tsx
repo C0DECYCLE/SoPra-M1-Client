@@ -24,11 +24,11 @@ const UserProfile = () => {
     }
   }, []);
 
-  UserManager.onListChange.once(() => {
+  UserManager.onTick.once(async () => {
     if (!UserManager.hasId(id)) {
       goBack();
     }
-    setUser(UserManager.getById(id));
+    setUser(await UserManager.getById(id));
   });
 
   let content = <Spinner />;
@@ -37,7 +37,7 @@ const UserProfile = () => {
     const mode = user.status === "ONLINE" ? "on" : "off";
     content = (
       <div className="userprofile form">
-        <h3>{user.username}</h3>
+        <h2>{user.username}</h2>
         <div className="userprofile leftright">
           <div className="userprofile left">
             <label>Status</label>

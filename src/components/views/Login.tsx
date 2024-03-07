@@ -4,7 +4,6 @@ import { Button } from "components/ui/Button";
 import "styles/views/Login.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import FormField from "components/ui/LogRegForm";
-import "react-toastify/dist/ReactToastify.css";
 import UserManager from "managers/UserManager";
 
 const Login = () => {
@@ -27,6 +26,7 @@ const Login = () => {
     <BaseContainer>
       <div className="login container">
         <div className="login form">
+          <h2>Login</h2>
           <div className="login fields">
             <FormField
               label="Username"
